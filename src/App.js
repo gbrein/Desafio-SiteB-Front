@@ -22,6 +22,9 @@ class App extends Component {
         this.handleUpdate = this
             .handleUpdate
             .bind(this);
+        this.handleSend = this
+            .handleSend
+            .bind(this);
     }
 
     handleUpdate(value, id) {
@@ -29,9 +32,13 @@ class App extends Component {
         if (newBaseForm[id] === undefined) {
             newBaseForm[id] = value
         } else {
-            newBaseForm[id] += value;
+            newBaseForm[id] = value;
         }
-       return this.setState({baseForm: newBaseForm})
+        return this.setState({baseForm: newBaseForm})
+    }
+
+    handleSend() {
+        console.log(this.state.baseForm)
     }
 
     render() {
@@ -43,7 +50,7 @@ class App extends Component {
                         exact
                         path='/'
                         render=
-                        { ()=> <Home action={this.handleUpdate} baseForm={this.state.baseForm} />}/>
+                        { ()=> <Home action={this.handleUpdate} actionSend={this.handleSend} baseForm={this.state.baseForm} />}/>
                     <Route path='/ListaDominios' component={ListaDominios}/>
                 </Switch>
             </div>

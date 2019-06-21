@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Form, Button, Col} from 'react-bootstrap';
+import checkCPF from '../checkCPF'
+import checkPhone from '../checkPhone'
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.handleOnChange = this
             .handleOnChange
+            .bind(this);
+        this.handleSubmit = this
+            .handleSubmit
+            .bind(this);
+        this.handleSubmitFail = this
+            .handleSubmitFail
             .bind(this);
     }
 
@@ -17,16 +25,41 @@ class Home extends Component {
         action(value, id)
     }
 
+    handleSubmit(event) {
+        const {actionSend} = this.props;
+        event.preventDefault();
+        actionSend();
+    }
+
+    handleSubmitFail(event, validaCPF, validaPhone) {
+        event.preventDefault();
+        // eslint-disable-next-line no-unused-expressions
+        if (validaCPF === false) {
+            alert('CPF Invalido');
+        }
+        if (validaPhone === false) {
+            alert('Telefone Invalido');
+        }
+    }
+
     render() {
         const {baseForm} = this.props;
+        let validaCPF = checkCPF(baseForm.cpf)
+        let validaPhone = checkPhone(baseForm.telefone)
+        // console.log(validaPhone)
         return (
             <div className="divForm">
-                <Form onSubmit= {e => this.handleSubmit(e)}>
+                <Form
+                    onSubmit=
+                    { (validaCPF)&&(validaPhone) ? (event) => this.handleSubmit(event) : (event)=> this.handleSubmitFail(event, validaCPF, validaPhone)}>
 
                     <Form.Row>
                         <Form.Group as={Col} controlId="nome">
                             <Form.Label>Nome Completo</Form.Label>
-                            <Form.Control defaultValue={baseForm.nome} onChange={this.handleOnChange} required/>
+                            <Form.Control
+                                defaultValue={baseForm.nome}
+                                onChange={this.handleOnChange}
+                                required/>
                         </Form.Group>
                     </Form.Row>
 
@@ -45,7 +78,10 @@ class Home extends Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="cpf">
                             <Form.Label>CPF</Form.Label>
-                            <Form.Control defaultValue={baseForm.cpf} onChange={this.handleOnChange} required/>
+                            <Form.Control
+                                defaultValue={baseForm.cpf}
+                                onChange={this.handleOnChange}
+                                required/>
                         </Form.Group>
                         <Form.Group as={Col} controlId="email">
                             <Form.Label>Email</Form.Label>
@@ -60,9 +96,9 @@ class Home extends Component {
 
                     <Form.Row>
                         <Form.Group as={Col} controlId="telefone">
-                            <Form.Label>Telefone</Form.Label>
+                            <Form.Label>Telefone (Sem Traços ou caracteres especiais)</Form.Label>
                             <Form.Control
-                                placeholder="XX-XXXXX-XXXX"
+                                placeholder="XXXXXXXXXXX"
                                 onChange={this.handleOnChange}
                                 defaultValue={baseForm.telefone}
                                 required/>
