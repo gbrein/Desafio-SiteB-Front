@@ -9,6 +9,7 @@ function NavB() {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/ListaDominios">Lista de Dominios</Nav.Link>
+                    <Nav.Link >|</Nav.Link>
                     <Nav.Link href="#"><img src="/ic_phone.svg"/></Nav.Link>
                     <Nav.Link className="text-client">Seja cliente Site Blindado</Nav.Link>
                     <Nav.Link className="text-client">4003-2122</Nav.Link>
