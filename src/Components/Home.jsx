@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {Form, Button, Col} from 'react-bootstrap';
 import checkCPF from '../checkCPF'
 import checkPhone from '../checkPhone'
@@ -46,10 +46,12 @@ class Home extends Component {
         const {baseForm} = this.props;
         let validaCPF = checkCPF(baseForm.cpf)
         let validaPhone = checkPhone(baseForm.telefone)
-        // console.log(validaPhone)
+        let {checkSucess} = this.props;
+        if (checkSucess==false){
         return (
             <div className="divForm">
                 <Form
+                    enctype="application/json"
                     onSubmit=
                     { (validaCPF)&&(validaPhone) ? (event) => this.handleSubmit(event) : (event)=> this.handleSubmitFail(event, validaCPF, validaPhone)}>
 
@@ -123,7 +125,12 @@ class Home extends Component {
 
                 </Form>
             </div>
-        )
+        )}
+        else{
+            return(
+        <Redirect to='/Sucess' />
+            )
+        }
     }
 }
 
