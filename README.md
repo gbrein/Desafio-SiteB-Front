@@ -11,7 +11,7 @@ https://github.com/gbrein/Desafio-SiteB
 To run the project: 
 - type on CMD: git clone https://github.com/gbrein/Desafio-SiteB-Front.git 
 - go inside the folder and type: npm install
-- type npm start
+- type yarn start
 - the application will be available on http://localhost:3000
 
 ## Prerequisites
